@@ -41,16 +41,20 @@ export default class Execute extends Command {
 
   async run() {
     const { args, flags } = this.parse(Execute);
+    const paramValue =
+      args.paramValue == "true" || args.paramValue == "false"
+        ? args.paramValue == "true"
+        : args.paramValue;
     const command = flags.command;
     const requestId = uuid();
     const commandParams =
       command === "SetModes"
         ? {
             updateModeSettings: {
-              [args.paramName]: args.paramValue
+              [args.paramName]: paramValue
             }
           }
-        : { [args.paramName]: args.paramValue };
+        : { [args.paramName]: paramValue };
 
     await axios
       .post(

@@ -1,7 +1,7 @@
 {
   "name": "gassi-cli",
   "description": "Run SYNC, QUERY, EXECUTE and DISCONNECT requests on Google SmartHome easily",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Spiss, Lukas @Spissable",
   "bin": {
     "gassi": "./bin/run"

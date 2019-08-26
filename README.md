@@ -22,7 +22,7 @@ $ npm install -g gassi-cli
 $ gassi COMMAND
 running command...
 $ gassi (-v|--version|version)
-gassi-cli/0.1.0 linux-x64 node-v10.16.0
+gassi-cli/0.1.2 linux-x64 node-v10.16.0
 $ gassi --help [COMMAND]
 USAGE
   $ gassi COMMAND
@@ -53,7 +53,7 @@ OPTIONS
   -u, --uri=uri      (required) uri of the service
 ```
 
-_See code: [src/commands/disconnect.ts](https://github.com/Spissable/gassi-cli/blob/v0.1.0/src/commands/disconnect.ts)_
+_See code: [src/commands/disconnect.ts](https://github.com/Spissable/gassi-cli/blob/v0.1.2/src/commands/disconnect.ts)_
 
 ## `gassi execute PARAMNAME PARAMVALUE`
 
@@ -71,7 +71,7 @@ OPTIONS
   -u, --uri=uri          (required) uri of the service
 ```
 
-_See code: [src/commands/execute.ts](https://github.com/Spissable/gassi-cli/blob/v0.1.0/src/commands/execute.ts)_
+_See code: [src/commands/execute.ts](https://github.com/Spissable/gassi-cli/blob/v0.1.2/src/commands/execute.ts)_
 
 ## `gassi help [COMMAND]`
 
@@ -105,7 +105,7 @@ OPTIONS
   -u, --uri=uri      (required) uri of the service
 ```
 
-_See code: [src/commands/query.ts](https://github.com/Spissable/gassi-cli/blob/v0.1.0/src/commands/query.ts)_
+_See code: [src/commands/query.ts](https://github.com/Spissable/gassi-cli/blob/v0.1.2/src/commands/query.ts)_
 
 ## `gassi sync`
 
@@ -121,5 +121,5 @@ OPTIONS
   -u, --uri=uri      (required) uri of the service
 ```
 
-_See code: [src/commands/sync.ts](https://github.com/Spissable/gassi-cli/blob/v0.1.0/src/commands/sync.ts)_
+_See code: [src/commands/sync.ts](https://github.com/Spissable/gassi-cli/blob/v0.1.2/src/commands/sync.ts)_
 <!-- commandsstop -->
