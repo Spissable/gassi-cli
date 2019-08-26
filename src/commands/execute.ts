@@ -46,7 +46,7 @@ export default class Execute extends Command {
     const commandParams =
       command === "SetModes"
         ? {
-            currentModeSettings: {
+            updateModeSettings: {
               [args.paramName]: args.paramValue
             }
           }
