@@ -1,7 +1,7 @@
 {
   "name": "gassi-cli",
-  "description": "Run SYNC, QUERY, EXECUTE and DISCONNECT requests easily",
-  "version": "0.1.0",
+  "description": "Run SYNC, QUERY, EXECUTE and DISCONNECT requests on Google SmartHome easily",
+  "version": "0.1.1",
   "author": "Spiss, Lukas @Spissable",
   "bin": {
     "gassi": "./bin/run"
@@ -40,7 +40,11 @@
   ],
   "homepage": "https://github.com/Spissable/gassi-cli",
   "keywords": [
-    "oclif"
+    "oclif",
+    "google",
+    "smarthome",
+    "assistant",
+    "cli"
   ],
   "license": "MIT",
   "main": "lib/index.js",
