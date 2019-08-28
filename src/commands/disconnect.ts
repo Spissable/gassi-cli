@@ -24,26 +24,23 @@ export default class Disconnect extends Command {
   async run() {
     const { flags } = this.parse(Disconnect);
     const requestId = uuid();
+    const disconnectBody: DisconnectBody = {
+      requestId,
+      inputs: [
+        {
+          intent: "action.devices.DISCONNECT"
+        }
+      ]
+    };
 
     await axios
-      .post(
-        flags.uri,
-        {
-          requestId,
-          inputs: [
-            {
-              intent: "action.devices.DISCONNECT"
-            }
-          ]
-        } as DisconnectBody,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${flags.token}`
-          },
-          responseType: "json"
-        }
-      )
+      .post(flags.uri, disconnectBody, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${flags.token}`
+        },
+        responseType: "json"
+      })
       .then(
         response => {
           this.log(JSON.stringify(response.data, null, 2));

@@ -55,39 +55,36 @@ export default class Execute extends Command {
             }
           }
         : { [args.paramName]: paramValue };
-
-    await axios
-      .post(
-        flags.uri,
+    const executeBody: ExecuteBody = {
+      requestId,
+      inputs: [
         {
-          requestId,
-          inputs: [
-            {
-              intent: "action.devices.EXECUTE",
-              payload: {
-                commands: [
+          intent: "action.devices.EXECUTE",
+          payload: {
+            commands: [
+              {
+                devices: [{ id: flags.id }],
+                execution: [
                   {
-                    devices: [{ id: flags.id }],
-                    execution: [
-                      {
-                        command: `action.devices.commands.${command}`,
-                        params: commandParams
-                      }
-                    ]
+                    command: `action.devices.commands.${command}`,
+                    params: commandParams
                   }
                 ]
               }
-            }
-          ]
-        } as ExecuteBody,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${flags.token}`
-          },
-          responseType: "json"
+            ]
+          }
         }
-      )
+      ]
+    };
+
+    await axios
+      .post(flags.uri, executeBody, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${flags.token}`
+        },
+        responseType: "json"
+      })
       .then(
         response => {
           this.log(JSON.stringify(response.data, null, 2));

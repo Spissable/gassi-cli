@@ -30,29 +30,26 @@ export default class Query extends Command {
   async run() {
     const { flags } = this.parse(Query);
     const requestId = uuid();
+    const queryBody: QueryBody = {
+      requestId,
+      inputs: [
+        {
+          intent: "action.devices.QUERY",
+          payload: {
+            devices: [{ id: flags.id }]
+          }
+        }
+      ]
+    };
 
     await axios
-      .post(
-        flags.uri,
-        {
-          requestId,
-          inputs: [
-            {
-              intent: "action.devices.QUERY",
-              payload: {
-                devices: [{ id: flags.id }]
-              }
-            }
-          ]
-        } as QueryBody,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${flags.token}`
-          },
-          responseType: "json"
-        }
-      )
+      .post(flags.uri, queryBody, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${flags.token}`
+        },
+        responseType: "json"
+      })
       .then(
         response => {
           this.log(JSON.stringify(response.data, null, 2));

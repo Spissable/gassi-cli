@@ -26,26 +26,23 @@ export default class Sync extends Command {
     const token = flags.token;
     const uri = flags.uri;
     const requestId = uuid();
+    const syncBody: SyncBody = {
+      requestId,
+      inputs: [
+        {
+          intent: "action.devices.SYNC"
+        }
+      ]
+    };
 
     await axios
-      .post(
-        uri,
-        {
-          requestId,
-          inputs: [
-            {
-              intent: "action.devices.SYNC"
-            }
-          ]
-        } as SyncBody,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-          },
-          responseType: "json"
-        }
-      )
+      .post(uri, syncBody, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        responseType: "json"
+      })
       .then(
         response => {
           this.log(JSON.stringify(response.data, null, 2));
