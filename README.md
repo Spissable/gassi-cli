@@ -22,7 +22,7 @@ $ npm install -g gassi-cli
 $ gassi COMMAND
 running command...
 $ gassi (-v|--version|version)
-gassi-cli/0.1.2 linux-x64 node-v10.16.3
+gassi-cli/0.1.2 linux-x64 node-v12.10.0
 $ gassi --help [COMMAND]
 USAGE
   $ gassi COMMAND
