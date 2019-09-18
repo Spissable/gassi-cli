@@ -47,14 +47,20 @@ export default class Execute extends Command {
         : args.paramValue;
     const command = flags.command;
     const requestId = uuid();
-    const commandParams =
-      command === "SetModes"
-        ? {
-            updateModeSettings: {
-              [args.paramName]: paramValue
-            }
-          }
-        : { [args.paramName]: paramValue };
+    let commandParams: any = { [args.paramName]: paramValue };
+    if (command === "SetModes") {
+      commandParams = {
+        updateModeSettings: {
+          [args.paramName]: paramValue
+        }
+      };
+    } else if (command === "SetToggles") {
+      commandParams = {
+        updateToggleSettings: {
+          [args.paramName]: paramValue
+        }
+      };
+    }
     const executeBody: ExecuteBody = {
       requestId,
       inputs: [
