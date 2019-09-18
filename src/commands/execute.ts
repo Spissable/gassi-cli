@@ -3,7 +3,7 @@ import axios from "axios";
 import * as uuid from "uuid/v4";
 
 export default class Execute extends Command {
-  static description = "Sends a QUERY request intent";
+  static description = "Sends an EXECUTE request intent";
 
   static flags = {
     token: flags.string({
