@@ -1,6 +1,7 @@
 import { Command, flags } from "@oclif/command";
 import axios from "axios";
 import * as uuid from "uuid/v4";
+import { parseInput } from "../util/util";
 
 export default class Execute extends Command {
   static description = "Sends an EXECUTE request intent";
@@ -36,15 +37,15 @@ export default class Execute extends Command {
 
   static args = [
     { name: "paramName", required: true },
-    { name: "paramValue", required: true }
+    {
+      name: "paramValue",
+      required: true
+    }
   ];
 
   async run() {
     const { args, flags } = this.parse(Execute);
-    const paramValue =
-      args.paramValue == "true" || args.paramValue == "false"
-        ? args.paramValue == "true"
-        : args.paramValue;
+    const paramValue = parseInput(args.paramValue);
     const command = flags.command;
     const requestId = uuid();
     let commandParams: any = { [args.paramName]: paramValue };
