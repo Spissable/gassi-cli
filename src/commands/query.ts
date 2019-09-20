@@ -56,7 +56,7 @@ export default class Query extends Command {
         },
         error => {
           this.log(`Request ${requestId} failed with:`);
-          this.log(error.message);
+          this.log(JSON.stringify(error.response.data, null, 2));
         }
       );
   }

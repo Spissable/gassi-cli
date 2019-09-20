@@ -5,6 +5,7 @@ module.exports = {
   testMatch: ["**/*.test.+(ts|tsx|js)"],
   collectCoverage: true,
   collectCoverageFrom: ["src/**/*.ts"],
+  coveragePathIgnorePatterns: ["index.ts"],
   globals: {
     "ts-jest": {
       tsConfig: "tsconfig.json",
@@ -13,5 +14,6 @@ module.exports = {
   },
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest"
-  }
+  },
+  setupFilesAfterEnv: ["./jest.setup.js"]
 };
