@@ -14,17 +14,16 @@ describe("QUERY intent", () => {
       }
     }
   };
-
   const errorReply = {
     message: "some.error"
   };
+  const testHost = "http://some.google-action.com";
 
   test("Sends a QUERY request to the specified host", async () => {
-    const testHost = "http://some.google-action.com/api";
     const mock = nock(testHost, {
       reqheaders: { Authorization: "Bearer some.token" }
     })
-      .post("", {
+      .post("/", {
         requestId: "some.uuid",
         inputs: [
           {
@@ -50,11 +49,10 @@ describe("QUERY intent", () => {
   });
 
   test("Error response is logged", async () => {
-    const testHost = "http://some.google-action.com/api";
     const mock = nock(testHost, {
       reqheaders: { Authorization: "Bearer some.token" }
     })
-      .post("", {
+      .post("/", {
         requestId: "some.uuid",
         inputs: [
           {

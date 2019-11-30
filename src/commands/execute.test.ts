@@ -110,13 +110,13 @@ describe("EXECUTE intent", () => {
   const errorReply = {
     message: "some.error"
   };
+  const testHost = "http://some.google-action.com";
 
   test("Sends a OnOff command to the specified host", async () => {
-    const testHost = "http://some.google-action.com/api";
     const mock = nock(testHost, {
       reqheaders: { Authorization: "Bearer some.token" }
     })
-      .post("", onOffRequest)
+      .post("/", onOffRequest)
       .reply(200, executeReply);
 
     stdout.start();
@@ -139,11 +139,10 @@ describe("EXECUTE intent", () => {
   });
 
   test("Sends SetModes command to the specified host", async () => {
-    const testHost = "http://some.google-action.com/api";
     const mock = nock(testHost, {
       reqheaders: { Authorization: "Bearer some.token" }
     })
-      .post("", setModesRequest)
+      .post("/", setModesRequest)
       .reply(200, executeReply);
 
     stdout.start();
@@ -166,11 +165,10 @@ describe("EXECUTE intent", () => {
   });
 
   test("Sends SetToggles command to the specified host", async () => {
-    const testHost = "http://some.google-action.com/api";
     const mock = nock(testHost, {
       reqheaders: { Authorization: "Bearer some.token" }
     })
-      .post("", setTogglesRequest)
+      .post("/", setTogglesRequest)
       .reply(200, executeReply);
 
     stdout.start();
@@ -193,11 +191,10 @@ describe("EXECUTE intent", () => {
   });
 
   test("Error response is logged", async () => {
-    const testHost = "http://some.google-action.com/api";
     const mock = nock(testHost, {
       reqheaders: { Authorization: "Bearer some.token" }
     })
-      .post("", onOffRequest)
+      .post("/", onOffRequest)
       .reply(409, errorReply);
 
     stdout.start();
