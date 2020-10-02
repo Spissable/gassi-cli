@@ -1,6 +1,6 @@
 import { Command, flags } from "@oclif/command";
 import axios from "axios";
-import * as uuid from "uuid/v4";
+import { v4 as uuid } from "uuid";
 import { parseInput } from "../util/util";
 
 export default class Execute extends Command {
@@ -11,36 +11,36 @@ export default class Execute extends Command {
       char: "t",
       description: "oauth access token",
       env: "token",
-      required: true
+      required: true,
     }),
     uri: flags.string({
       char: "u",
       description: "uri of the service",
       env: "uri",
-      required: true
+      required: true,
     }),
     id: flags.string({
       char: "i",
       description: "id to query",
       env: "id",
-      required: true
+      required: true,
     }),
     command: flags.string({
       char: "c",
       description: "command to execute",
       env: "command",
-      required: true
+      required: true,
     }),
 
-    help: flags.help({ char: "h" })
+    help: flags.help({ char: "h" }),
   };
 
   static args = [
     { name: "paramName", required: true },
     {
       name: "paramValue",
-      required: true
-    }
+      required: true,
+    },
   ];
 
   async run() {
@@ -52,14 +52,14 @@ export default class Execute extends Command {
     if (command === "SetModes") {
       commandParams = {
         updateModeSettings: {
-          [args.paramName]: paramValue
-        }
+          [args.paramName]: paramValue,
+        },
       };
     } else if (command === "SetToggles") {
       commandParams = {
         updateToggleSettings: {
-          [args.paramName]: paramValue
-        }
+          [args.paramName]: paramValue,
+        },
       };
     }
     const executeBody: ExecuteBody = {
@@ -74,29 +74,29 @@ export default class Execute extends Command {
                 execution: [
                   {
                     command: `action.devices.commands.${command}`,
-                    params: commandParams
-                  }
-                ]
-              }
-            ]
-          }
-        }
-      ]
+                    params: commandParams,
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ],
     };
 
     await axios
       .post(flags.uri, executeBody, {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${flags.token}`
+          Authorization: `Bearer ${flags.token}`,
         },
-        responseType: "json"
+        responseType: "json",
       })
       .then(
-        response => {
+        (response) => {
           this.log(JSON.stringify(response.data, null, 2));
         },
-        error => {
+        (error) => {
           this.log(`Request ${requestId} failed with:`);
           this.log(JSON.stringify(error.response.data, null, 2));
         }

@@ -13,22 +13,22 @@ describe("EXECUTE intent", () => {
             {
               devices: [
                 {
-                  id: "some.id"
-                }
+                  id: "some.id",
+                },
               ],
               execution: [
                 {
                   command: "action.devices.commands.OnOff",
                   params: {
-                    on: true
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      }
-    ]
+                    on: true,
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
   };
 
   const setModesRequest = {
@@ -41,24 +41,24 @@ describe("EXECUTE intent", () => {
             {
               devices: [
                 {
-                  id: "some.id"
-                }
+                  id: "some.id",
+                },
               ],
               execution: [
                 {
                   command: "action.devices.commands.SetModes",
                   params: {
                     updateModeSettings: {
-                      program: "some.program"
-                    }
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      }
-    ]
+                      program: "some.program",
+                    },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
   };
 
   const setTogglesRequest = {
@@ -71,24 +71,24 @@ describe("EXECUTE intent", () => {
             {
               devices: [
                 {
-                  id: "some.id"
-                }
+                  id: "some.id",
+                },
               ],
               execution: [
                 {
                   command: "action.devices.commands.SetToggles",
                   params: {
                     updateToggleSettings: {
-                      Light: true
-                    }
-                  }
-                }
-              ]
-            }
-          ]
-        }
-      }
-    ]
+                      Light: true,
+                    },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
   };
 
   const executeReply = {
@@ -100,21 +100,21 @@ describe("EXECUTE intent", () => {
           status: "SUCCESS",
           states: {
             on: true,
-            online: true
-          }
-        }
-      ]
-    }
+            online: true,
+          },
+        },
+      ],
+    },
   };
 
   const errorReply = {
-    message: "some.error"
+    message: "some.error",
   };
   const testHost = "http://some.google-action.com";
 
   test("Sends a OnOff command to the specified host", async () => {
     const mock = nock(testHost, {
-      reqheaders: { Authorization: "Bearer some.token" }
+      reqheaders: { Authorization: "Bearer some.token" },
     })
       .post("/", onOffRequest)
       .reply(200, executeReply);
@@ -130,7 +130,7 @@ describe("EXECUTE intent", () => {
       "-c",
       "OnOff",
       "on",
-      "true"
+      "true",
     ]);
     stdout.stop();
 
@@ -140,7 +140,7 @@ describe("EXECUTE intent", () => {
 
   test("Sends SetModes command to the specified host", async () => {
     const mock = nock(testHost, {
-      reqheaders: { Authorization: "Bearer some.token" }
+      reqheaders: { Authorization: "Bearer some.token" },
     })
       .post("/", setModesRequest)
       .reply(200, executeReply);
@@ -156,7 +156,7 @@ describe("EXECUTE intent", () => {
       "-c",
       "SetModes",
       "program",
-      "some.program"
+      "some.program",
     ]);
     stdout.stop();
 
@@ -166,7 +166,7 @@ describe("EXECUTE intent", () => {
 
   test("Sends SetToggles command to the specified host", async () => {
     const mock = nock(testHost, {
-      reqheaders: { Authorization: "Bearer some.token" }
+      reqheaders: { Authorization: "Bearer some.token" },
     })
       .post("/", setTogglesRequest)
       .reply(200, executeReply);
@@ -182,7 +182,7 @@ describe("EXECUTE intent", () => {
       "-c",
       "SetToggles",
       "Light",
-      "true"
+      "true",
     ]);
     stdout.stop();
 
@@ -192,7 +192,7 @@ describe("EXECUTE intent", () => {
 
   test("Error response is logged", async () => {
     const mock = nock(testHost, {
-      reqheaders: { Authorization: "Bearer some.token" }
+      reqheaders: { Authorization: "Bearer some.token" },
     })
       .post("/", onOffRequest)
       .reply(409, errorReply);
@@ -208,7 +208,7 @@ describe("EXECUTE intent", () => {
       "-c",
       "OnOff",
       "on",
-      "true"
+      "true",
     ]);
     stdout.stop();
 

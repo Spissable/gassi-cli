@@ -1,3 +1,3 @@
-jest.mock("uuid/v4", () => {
-  return () => "some.uuid";
-});
+jest.mock("uuid", () => ({
+  v4: () => "some.uuid"
+}));

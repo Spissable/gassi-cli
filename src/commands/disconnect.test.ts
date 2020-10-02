@@ -4,21 +4,21 @@ import Disconnect from "./disconnect";
 
 describe("DISCONNECT intent", () => {
   const errorReply = {
-    message: "some.error"
+    message: "some.error",
   };
   const testHost = "http://some.google-action.com";
 
   test("Sends a DISCONNECT request to the specified host", async () => {
     const mock = nock(testHost, {
-      reqheaders: { Authorization: "Bearer some.token" }
+      reqheaders: { Authorization: "Bearer some.token" },
     })
       .post("/", {
         requestId: "some.uuid",
         inputs: [
           {
-            intent: "action.devices.DISCONNECT"
-          }
-        ]
+            intent: "action.devices.DISCONNECT",
+          },
+        ],
       })
       .reply(200, {});
 
@@ -32,15 +32,15 @@ describe("DISCONNECT intent", () => {
 
   test("Error response is logged", async () => {
     const mock = nock(testHost, {
-      reqheaders: { Authorization: "Bearer some.token" }
+      reqheaders: { Authorization: "Bearer some.token" },
     })
       .post("/", {
         requestId: "some.uuid",
         inputs: [
           {
-            intent: "action.devices.DISCONNECT"
-          }
-        ]
+            intent: "action.devices.DISCONNECT",
+          },
+        ],
       })
       .reply(409, errorReply);
 

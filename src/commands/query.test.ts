@@ -9,19 +9,19 @@ describe("QUERY intent", () => {
       devices: {
         "123": {
           on: true,
-          online: true
-        }
-      }
-    }
+          online: true,
+        },
+      },
+    },
   };
   const errorReply = {
-    message: "some.error"
+    message: "some.error",
   };
   const testHost = "http://some.google-action.com";
 
   test("Sends a QUERY request to the specified host", async () => {
     const mock = nock(testHost, {
-      reqheaders: { Authorization: "Bearer some.token" }
+      reqheaders: { Authorization: "Bearer some.token" },
     })
       .post("/", {
         requestId: "some.uuid",
@@ -31,12 +31,12 @@ describe("QUERY intent", () => {
             payload: {
               devices: [
                 {
-                  id: "some.id"
-                }
-              ]
-            }
-          }
-        ]
+                  id: "some.id",
+                },
+              ],
+            },
+          },
+        ],
       })
       .reply(200, queryReply);
 
@@ -50,7 +50,7 @@ describe("QUERY intent", () => {
 
   test("Error response is logged", async () => {
     const mock = nock(testHost, {
-      reqheaders: { Authorization: "Bearer some.token" }
+      reqheaders: { Authorization: "Bearer some.token" },
     })
       .post("/", {
         requestId: "some.uuid",
@@ -60,12 +60,12 @@ describe("QUERY intent", () => {
             payload: {
               devices: [
                 {
-                  id: "some.id"
-                }
-              ]
-            }
-          }
-        ]
+                  id: "some.id",
+                },
+              ],
+            },
+          },
+        ],
       })
       .reply(409, errorReply);
 

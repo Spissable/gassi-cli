@@ -15,30 +15,30 @@ describe("SYNC intent", () => {
           name: {
             defaultNames: ["My Outlet 1234"],
             name: "Night light",
-            nicknames: ["wall plug"]
-          }
-        }
-      ]
-    }
+            nicknames: ["wall plug"],
+          },
+        },
+      ],
+    },
   };
 
   const errorReply = {
-    message: "some.error"
+    message: "some.error",
   };
 
   const testHost = "http://some.google-action.com";
 
   test("Sends a SYNC request to the specified host", async () => {
     const mock = nock(testHost, {
-      reqheaders: { Authorization: "Bearer some.token" }
+      reqheaders: { Authorization: "Bearer some.token" },
     })
       .post("/", {
         requestId: "some.uuid",
         inputs: [
           {
-            intent: "action.devices.SYNC"
-          }
-        ]
+            intent: "action.devices.SYNC",
+          },
+        ],
       })
       .reply(200, syncReply);
 
@@ -52,15 +52,15 @@ describe("SYNC intent", () => {
 
   test("Error response is logged", async () => {
     const mock = nock(testHost, {
-      reqheaders: { Authorization: "Bearer some.token" }
+      reqheaders: { Authorization: "Bearer some.token" },
     })
       .post("/", {
         requestId: "some.uuid",
         inputs: [
           {
-            intent: "action.devices.SYNC"
-          }
-        ]
+            intent: "action.devices.SYNC",
+          },
+        ],
       })
       .reply(409, errorReply);
 
