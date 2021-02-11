@@ -1,6 +1,9 @@
 import { Command, flags } from "@oclif/command";
 import axios from "axios";
 import { v4 as uuid } from "uuid";
+import * as inquirer from "inquirer";
+import { QueryRequest } from "../entities/QueryRequest";
+import { readConfig } from "../util/configUtil";
 
 export default class Query extends Command {
   static description = "Sends a QUERY request intent";
@@ -22,7 +25,7 @@ export default class Query extends Command {
       char: "i",
       description: "id to query",
       env: "id",
-      required: true,
+      required: false,
     }),
     help: flags.help({ char: "h" }),
   };
@@ -30,13 +33,20 @@ export default class Query extends Command {
   async run() {
     const { flags } = this.parse(Query);
     const requestId = uuid();
-    const queryBody: QueryBody = {
+
+    const deviceId =
+      flags.id ||
+      (await this.promptId().catch(() => {
+        this.error("Please run sync first or provide arguments.");
+      }));
+
+    const queryBody: QueryRequest = {
       requestId,
       inputs: [
         {
           intent: "action.devices.QUERY",
           payload: {
-            devices: [{ id: flags.id }],
+            devices: [{ id: deviceId }],
           },
         },
       ],
@@ -60,14 +70,17 @@ export default class Query extends Command {
         }
       );
   }
-}
 
-interface QueryBody {
-  requestId: string;
-  inputs: {
-    intent: "action.devices.QUERY";
-    payload: {
-      devices: { id: string }[];
-    };
-  }[];
+  async promptId(): Promise<string> {
+    const syncedDevices = await readConfig(this.config.configDir);
+    const responses = await inquirer.prompt([
+      {
+        name: "id",
+        message: "select a device id",
+        type: "list",
+        choices: syncedDevices.ids,
+      },
+    ]);
+    return responses.id;
+  }
 }

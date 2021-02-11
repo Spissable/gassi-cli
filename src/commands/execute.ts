@@ -1,7 +1,11 @@
 import { Command, flags } from "@oclif/command";
 import axios from "axios";
 import { v4 as uuid } from "uuid";
-import { parseInput } from "../util/util";
+import { parseInput } from "../util/parseUtil";
+import { readConfig } from "../util/configUtil";
+import { ExecuteRequest } from "../entities/ExecuteRequest";
+import * as inquirer from "inquirer";
+import { executeCommands } from "../constants/executeCommands";
 
 export default class Execute extends Command {
   static description = "Sends an EXECUTE request intent";
@@ -23,32 +27,41 @@ export default class Execute extends Command {
       char: "i",
       description: "id to query",
       env: "id",
-      required: true,
+      required: false,
     }),
     command: flags.string({
       char: "c",
       description: "command to execute",
       env: "command",
-      required: true,
+      required: false,
     }),
 
     help: flags.help({ char: "h" }),
   };
 
   static args = [
-    { name: "paramName", required: true },
+    { name: "paramName", required: false },
     {
       name: "paramValue",
-      required: true,
+      required: false,
     },
   ];
 
   async run() {
     const { args, flags } = this.parse(Execute);
-    const paramValue = parseInput(args.paramValue);
-    const command = flags.command;
+    const id =
+      flags.id ||
+      (await this.promptId().catch(() => {
+        this.error("Please run sync first or provide arguments.");
+      }));
+    const command = flags.command || (await this.promptCommand());
+    const paramName = args.paramName || (await this.promptParamName(command));
+    const paramValueStr =
+      args.paramValue || (await this.promptParamValue(command, paramName));
+    const paramValue = parseInput(paramValueStr);
     const requestId = uuid();
-    let commandParams: any = { [args.paramName]: paramValue };
+
+    let commandParams: any = { [paramName]: paramValue };
     if (command === "SetModes") {
       commandParams = {
         updateModeSettings: {
@@ -62,7 +75,7 @@ export default class Execute extends Command {
         },
       };
     }
-    const executeBody: ExecuteBody = {
+    const executeBody: ExecuteRequest = {
       requestId,
       inputs: [
         {
@@ -70,7 +83,7 @@ export default class Execute extends Command {
           payload: {
             commands: [
               {
-                devices: [{ id: flags.id }],
+                devices: [{ id }],
                 execution: [
                   {
                     command: `action.devices.commands.${command}`,
@@ -102,20 +115,56 @@ export default class Execute extends Command {
         }
       );
   }
-}
 
-interface ExecuteBody {
-  requestId: string;
-  inputs: {
-    intent: "action.devices.EXECUTE";
-    payload: {
-      commands: {
-        devices: { id: string }[];
-        execution: {
-          command: string;
-          params: any;
-        }[];
-      }[];
-    };
-  }[];
+  async promptId(): Promise<string> {
+    const syncedDevices = await readConfig(this.config.configDir);
+    const responses = await inquirer.prompt([
+      {
+        name: "id",
+        message: "select a device id",
+        type: "list",
+        choices: syncedDevices.ids,
+      },
+    ]);
+    return responses.id;
+  }
+
+  async promptCommand(): Promise<string> {
+    const commands = Object.keys(executeCommands);
+    const responses = await inquirer.prompt([
+      {
+        name: "command",
+        message: "select a command",
+        type: "list",
+        choices: commands,
+      },
+    ]);
+    return responses.command;
+  }
+
+  async promptParamName(command: string): Promise<string> {
+    const params = Object.keys(executeCommands[command]);
+    const responses = await inquirer.prompt([
+      {
+        name: "param",
+        message: "select a param",
+        type: "list",
+        choices: params,
+      },
+    ]);
+    return responses.param;
+  }
+
+  async promptParamValue(command: string, param: string): Promise<string> {
+    const values = executeCommands[command][param];
+    const responses = await inquirer.prompt([
+      {
+        name: "value",
+        message: "select a value",
+        type: "list",
+        choices: values,
+      },
+    ]);
+    return responses.value;
+  }
 }

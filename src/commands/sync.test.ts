@@ -1,5 +1,9 @@
 import * as nock from "nock";
 import { stdout } from "stdout-stderr";
+
+jest.mock("../util/configUtil.ts", () => ({
+  writeConfig: jest.fn(),
+}));
 import Sync from "./sync";
 
 describe("SYNC intent", () => {

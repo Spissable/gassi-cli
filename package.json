@@ -1,7 +1,7 @@
 {
   "name": "gassi-cli",
   "description": "Run SYNC, QUERY, EXECUTE and DISCONNECT requests on Google SmartHome easily",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "author": "Spiss, Lukas @Spissable",
   "bin": {
     "gassi": "./bin/run"
@@ -12,12 +12,16 @@
     "@oclif/config": "^1.17.0",
     "@oclif/plugin-help": "^3.2.2",
     "axios": "^0.21.1",
+    "fs-extra": "^9.1.0",
+    "inquirer": "^7.3.3",
     "tslib": "^2.1.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.26.0",
     "@types/axios": "^0.14.0",
+    "@types/fs-extra": "^9.0.7",
+    "@types/inquirer": "^7.3.1",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.25",
     "@types/uuid": "^8.3.0",

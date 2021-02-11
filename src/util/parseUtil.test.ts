@@ -1,6 +1,6 @@
-import { parseInput } from "./util";
+import { parseInput } from "./parseUtil";
 
-describe("Util", () => {
+describe("parseUtil", () => {
   describe("parseInput returns parsed numeric, boolean or string", () => {
     test("numeric values are parsed", () => {
       expect(parseInput("19")).toEqual(19);
