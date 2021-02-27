@@ -22,7 +22,7 @@ $ npm install -g gassi-cli
 $ gassi COMMAND
 running command...
 $ gassi (-v|--version|version)
-gassi-cli/0.1.4 linux-x64 node-v14.12.0
+gassi-cli/0.2.0 linux-x64 node-v14.4.0
 $ gassi --help [COMMAND]
 USAGE
   $ gassi COMMAND
@@ -34,7 +34,7 @@ USAGE
 
 <!-- commands -->
 * [`gassi disconnect`](#gassi-disconnect)
-* [`gassi execute PARAMNAME PARAMVALUE`](#gassi-execute-paramname-paramvalue)
+* [`gassi execute [PARAMNAME] [PARAMVALUE]`](#gassi-execute-paramname-paramvalue)
 * [`gassi help [COMMAND]`](#gassi-help-command)
 * [`gassi query`](#gassi-query)
 * [`gassi sync`](#gassi-sync)
@@ -53,25 +53,25 @@ OPTIONS
   -u, --uri=uri      (required) uri of the service
 ```
 
-_See code: [src/commands/disconnect.ts](https://github.com/Spissable/gassi-cli/blob/v0.1.4/src/commands/disconnect.ts)_
+_See code: [src/commands/disconnect.ts](https://github.com/Spissable/gassi-cli/blob/v0.2.0/src/commands/disconnect.ts)_
 
-## `gassi execute PARAMNAME PARAMVALUE`
+## `gassi execute [PARAMNAME] [PARAMVALUE]`
 
 Sends an EXECUTE request intent
 
 ```
 USAGE
-  $ gassi execute PARAMNAME PARAMVALUE
+  $ gassi execute [PARAMNAME] [PARAMVALUE]
 
 OPTIONS
-  -c, --command=command  (required) command to execute
+  -c, --command=command  command to execute
   -h, --help             show CLI help
-  -i, --id=id            (required) id to query
+  -i, --id=id            id to query
   -t, --token=token      (required) oauth access token
   -u, --uri=uri          (required) uri of the service
 ```
 
-_See code: [src/commands/execute.ts](https://github.com/Spissable/gassi-cli/blob/v0.1.4/src/commands/execute.ts)_
+_See code: [src/commands/execute.ts](https://github.com/Spissable/gassi-cli/blob/v0.2.0/src/commands/execute.ts)_
 
 ## `gassi help [COMMAND]`
 
@@ -88,7 +88,7 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.0/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
 
 ## `gassi query`
 
@@ -100,12 +100,12 @@ USAGE
 
 OPTIONS
   -h, --help         show CLI help
-  -i, --id=id        (required) id to query
+  -i, --id=id        id to query
   -t, --token=token  (required) oauth access token
   -u, --uri=uri      (required) uri of the service
 ```
 
-_See code: [src/commands/query.ts](https://github.com/Spissable/gassi-cli/blob/v0.1.4/src/commands/query.ts)_
+_See code: [src/commands/query.ts](https://github.com/Spissable/gassi-cli/blob/v0.2.0/src/commands/query.ts)_
 
 ## `gassi sync`
 
@@ -121,5 +121,5 @@ OPTIONS
   -u, --uri=uri      (required) uri of the service
 ```
 
-_See code: [src/commands/sync.ts](https://github.com/Spissable/gassi-cli/blob/v0.1.4/src/commands/sync.ts)_
+_See code: [src/commands/sync.ts](https://github.com/Spissable/gassi-cli/blob/v0.2.0/src/commands/sync.ts)_
 <!-- commandsstop -->

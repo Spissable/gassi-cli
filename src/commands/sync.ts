@@ -1,6 +1,10 @@
 import { Command, flags } from "@oclif/command";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { v4 as uuid } from "uuid";
+import { SyncRequest } from "../entities/SyncRequest";
+import { SyncResponse } from "../entities/SyncResponse";
+import { Config } from "../entities/Config";
+import { writeConfig } from "../util/configUtil";
 
 export default class Sync extends Command {
   static description = "Sends a SYNC request intent";
@@ -26,7 +30,7 @@ export default class Sync extends Command {
     const token = flags.token;
     const uri = flags.uri;
     const requestId = uuid();
-    const syncBody: SyncBody = {
+    const syncBody: SyncRequest = {
       requestId,
       inputs: [
         {
@@ -44,8 +48,13 @@ export default class Sync extends Command {
         responseType: "json",
       })
       .then(
-        (response) => {
-          this.log(JSON.stringify(response.data, null, 2));
+        (response: AxiosResponse<SyncResponse>) => {
+          const jsonResponse = JSON.stringify(response.data, null, 2);
+          const config: Config = {
+            ids: response.data.payload.devices.map((device) => device.id),
+          };
+          writeConfig(this.config.configDir, config);
+          this.log(jsonResponse);
         },
         (error) => {
           this.log(`Request ${requestId} failed with:`);
@@ -53,11 +62,4 @@ export default class Sync extends Command {
         }
       );
   }
-}
-
-interface SyncBody {
-  requestId: string;
-  inputs: {
-    intent: "action.devices.SYNC";
-  }[];
 }

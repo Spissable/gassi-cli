@@ -1,6 +1,7 @@
 import { Command, flags } from "@oclif/command";
 import axios from "axios";
 import { v4 as uuid } from "uuid";
+import { DisconnectRequest } from "../entities/DisconnectRequest";
 
 export default class Disconnect extends Command {
   static description = "Sends a DISCONNECT request intent";
@@ -24,7 +25,7 @@ export default class Disconnect extends Command {
   async run() {
     const { flags } = this.parse(Disconnect);
     const requestId = uuid();
-    const disconnectBody: DisconnectBody = {
+    const disconnectBody: DisconnectRequest = {
       requestId,
       inputs: [
         {
@@ -51,11 +52,4 @@ export default class Disconnect extends Command {
         }
       );
   }
-}
-
-interface DisconnectBody {
-  requestId: string;
-  inputs: {
-    intent: "action.devices.DISCONNECT";
-  }[];
 }

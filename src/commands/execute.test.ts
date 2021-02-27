@@ -1,5 +1,11 @@
 import * as nock from "nock";
 import { stdout } from "stdout-stderr";
+import * as inquirer from "inquirer";
+
+const configStub = jest.fn();
+jest.mock("../util/configUtil.ts", () => ({
+  readConfig: configStub.mockResolvedValue({ ids: [] }),
+}));
 import Execute from "./execute";
 
 describe("EXECUTE intent", () => {
@@ -216,5 +222,36 @@ describe("EXECUTE intent", () => {
     expect(stdout.output).toEqual(
       `Request some.uuid failed with:\n${JSON.stringify(errorReply, null, 2)}\n`
     );
+  });
+
+  test("Prompts work", async () => {
+    const mock = nock(testHost, {
+      reqheaders: { Authorization: "Bearer some.token" },
+    })
+      .post("/", onOffRequest)
+      .reply(200, executeReply);
+
+    jest
+      .spyOn(inquirer, "prompt")
+      .mockResolvedValueOnce({ id: "some.id" })
+      .mockResolvedValueOnce({ command: "OnOff" })
+      .mockResolvedValueOnce({ param: "on" })
+      .mockResolvedValueOnce({ value: "true" });
+
+    stdout.start();
+    await Execute.run(["-t", "some.token", "-u", testHost]);
+    stdout.stop();
+
+    expect(mock.isDone()).toBeTruthy();
+    expect(stdout.output).toEqual(JSON.stringify(executeReply, null, 2) + "\n");
+  });
+
+  test("Config error is caught", async () => {
+    configStub.mockRejectedValueOnce(new Error());
+
+    await expect(
+      Execute.run(["-t", "some.token", "-u", testHost])
+    ).rejects.toThrowError("Please run sync first or provide arguments.");
+    stdout.stop();
   });
 });
