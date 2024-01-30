@@ -22,7 +22,7 @@ $ npm install -g gassi-cli
 $ gassi COMMAND
 running command...
 $ gassi (-v|--version|version)
-gassi-cli/0.2.0 linux-x64 node-v14.4.0
+gassi-cli/0.2.1 darwin-arm64 node-v20.9.0
 $ gassi --help [COMMAND]
 USAGE
   $ gassi COMMAND
@@ -53,7 +53,7 @@ OPTIONS
   -u, --uri=uri      (required) uri of the service
 ```
 
-_See code: [src/commands/disconnect.ts](https://github.com/Spissable/gassi-cli/blob/v0.2.0/src/commands/disconnect.ts)_
+_See code: [src/commands/disconnect.ts](https://github.com/Spissable/gassi-cli/blob/v0.2.1/src/commands/disconnect.ts)_
 
 ## `gassi execute [PARAMNAME] [PARAMVALUE]`
 
@@ -71,7 +71,7 @@ OPTIONS
   -u, --uri=uri          (required) uri of the service
 ```
 
-_See code: [src/commands/execute.ts](https://github.com/Spissable/gassi-cli/blob/v0.2.0/src/commands/execute.ts)_
+_See code: [src/commands/execute.ts](https://github.com/Spissable/gassi-cli/blob/v0.2.1/src/commands/execute.ts)_
 
 ## `gassi help [COMMAND]`
 
@@ -88,7 +88,7 @@ OPTIONS
   --all  see all commands in CLI
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.18/src/commands/help.ts)_
 
 ## `gassi query`
 
@@ -105,7 +105,7 @@ OPTIONS
   -u, --uri=uri      (required) uri of the service
 ```
 
-_See code: [src/commands/query.ts](https://github.com/Spissable/gassi-cli/blob/v0.2.0/src/commands/query.ts)_
+_See code: [src/commands/query.ts](https://github.com/Spissable/gassi-cli/blob/v0.2.1/src/commands/query.ts)_
 
 ## `gassi sync`
 
@@ -121,5 +121,5 @@ OPTIONS
   -u, --uri=uri      (required) uri of the service
 ```
 
-_See code: [src/commands/sync.ts](https://github.com/Spissable/gassi-cli/blob/v0.2.0/src/commands/sync.ts)_
+_See code: [src/commands/sync.ts](https://github.com/Spissable/gassi-cli/blob/v0.2.1/src/commands/sync.ts)_
 <!-- commandsstop -->
