@@ -2,11 +2,10 @@
 
 Run SYNC, QUERY, EXECUTE and DISCONNECT requests easily
 
-[![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
-[![Version](https://img.shields.io/npm/v/gassi-cli.svg)](https://npmjs.org/package/gassi-cli)
-[![Downloads/week](https://img.shields.io/npm/dw/gassi-cli.svg)](https://npmjs.org/package/gassi-cli)
-[![License](https://img.shields.io/npm/l/gassi-cli.svg)](https://github.com/Spissable/gassi-cli/blob/master/package.json)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+![TypeScript](https://img.shields.io/static/v1?style=for-the-badge&message=TypeScript&color=3178C6&logo=TypeScript&logoColor=FFFFFF&label=)
+![oclif](https://img.shields.io/static/v1?style=for-the-badge&message=oclif&color=000000&logo=oclif&logoColor=FFFFFF&label=)
+![Biome](https://img.shields.io/static/v1?style=for-the-badge&message=Biome&color=60A5FA&logo=Biome&logoColor=FFFFFF&label=)
+![Jest](https://img.shields.io/static/v1?style=for-the-badge&message=Jest&color=C21325&logo=Jest&logoColor=FFFFFF&label=)
 
 <!-- toc -->
 * [gassi-cli](#gassi-cli)
