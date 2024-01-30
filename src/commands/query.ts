@@ -1,33 +1,33 @@
-import { Command, flags } from "@oclif/command";
-import axios from "axios";
-import { v4 as uuid } from "uuid";
-import * as inquirer from "inquirer";
-import { QueryRequest } from "../entities/QueryRequest";
-import { readConfig } from "../util/configUtil";
+import { Command, flags } from '@oclif/command';
+import axios from 'axios';
+import * as inquirer from 'inquirer';
+import { v4 as uuid } from 'uuid';
+import { QueryRequest } from '../entities/QueryRequest';
+import { readConfig } from '../util/configUtil';
 
 export default class Query extends Command {
-  static description = "Sends a QUERY request intent";
+  static description = 'Sends a QUERY request intent';
 
   static flags = {
     token: flags.string({
-      char: "t",
-      description: "oauth access token",
-      env: "token",
+      char: 't',
+      description: 'oauth access token',
+      env: 'token',
       required: true,
     }),
     uri: flags.string({
-      char: "u",
-      description: "uri of the service",
-      env: "uri",
+      char: 'u',
+      description: 'uri of the service',
+      env: 'uri',
       required: true,
     }),
     id: flags.string({
-      char: "i",
-      description: "id to query",
-      env: "id",
+      char: 'i',
+      description: 'id to query',
+      env: 'id',
       required: false,
     }),
-    help: flags.help({ char: "h" }),
+    help: flags.help({ char: 'h' }),
   };
 
   async run() {
@@ -37,14 +37,14 @@ export default class Query extends Command {
     const deviceId =
       flags.id ||
       (await this.promptId().catch(() => {
-        this.error("Please run sync first or provide arguments.");
+        this.error('Please run sync first or provide arguments.');
       }));
 
     const queryBody: QueryRequest = {
       requestId,
       inputs: [
         {
-          intent: "action.devices.QUERY",
+          intent: 'action.devices.QUERY',
           payload: {
             devices: [{ id: deviceId }],
           },
@@ -55,10 +55,10 @@ export default class Query extends Command {
     await axios
       .post(flags.uri, queryBody, {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${flags.token}`,
         },
-        responseType: "json",
+        responseType: 'json',
       })
       .then(
         (response) => {
@@ -67,7 +67,7 @@ export default class Query extends Command {
         (error) => {
           this.log(`Request ${requestId} failed with:`);
           this.log(JSON.stringify(error.response.data, null, 2));
-        }
+        },
       );
   }
 
@@ -75,9 +75,9 @@ export default class Query extends Command {
     const syncedDevices = await readConfig(this.config.configDir);
     const responses = await inquirer.prompt([
       {
-        name: "id",
-        message: "select a device id",
-        type: "list",
+        name: 'id',
+        message: 'select a device id',
+        type: 'list',
         choices: syncedDevices.ids,
       },
     ]);

@@ -1,25 +1,25 @@
-import { Command, flags } from "@oclif/command";
-import axios from "axios";
-import { v4 as uuid } from "uuid";
-import { DisconnectRequest } from "../entities/DisconnectRequest";
+import { Command, flags } from '@oclif/command';
+import axios from 'axios';
+import { v4 as uuid } from 'uuid';
+import { DisconnectRequest } from '../entities/DisconnectRequest';
 
 export default class Disconnect extends Command {
-  static description = "Sends a DISCONNECT request intent";
+  static description = 'Sends a DISCONNECT request intent';
 
   static flags = {
     token: flags.string({
-      char: "t",
-      description: "oauth access token",
-      env: "token",
+      char: 't',
+      description: 'oauth access token',
+      env: 'token',
       required: true,
     }),
     uri: flags.string({
-      char: "u",
-      description: "uri of the service",
-      env: "uri",
+      char: 'u',
+      description: 'uri of the service',
+      env: 'uri',
       required: true,
     }),
-    help: flags.help({ char: "h" }),
+    help: flags.help({ char: 'h' }),
   };
 
   async run() {
@@ -29,7 +29,7 @@ export default class Disconnect extends Command {
       requestId,
       inputs: [
         {
-          intent: "action.devices.DISCONNECT",
+          intent: 'action.devices.DISCONNECT',
         },
       ],
     };
@@ -37,10 +37,10 @@ export default class Disconnect extends Command {
     await axios
       .post(flags.uri, disconnectBody, {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${flags.token}`,
         },
-        responseType: "json",
+        responseType: 'json',
       })
       .then(
         (response) => {
@@ -49,7 +49,7 @@ export default class Disconnect extends Command {
         (error) => {
           this.log(`Request ${requestId} failed with:`);
           this.log(JSON.stringify(error.response.data, null, 2));
-        }
+        },
       );
   }
 }

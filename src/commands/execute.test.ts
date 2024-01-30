@@ -1,30 +1,30 @@
-import * as nock from "nock";
-import { stdout } from "stdout-stderr";
-import * as inquirer from "inquirer";
+import * as inquirer from 'inquirer';
+import * as nock from 'nock';
+import { stdout } from 'stdout-stderr';
 
 const configStub = jest.fn();
-jest.mock("../util/configUtil.ts", () => ({
+jest.mock('../util/configUtil.ts', () => ({
   readConfig: configStub.mockResolvedValue({ ids: [] }),
 }));
-import Execute from "./execute";
+import Execute from './execute';
 
-describe("EXECUTE intent", () => {
+describe('EXECUTE intent', () => {
   const onOffRequest = {
-    requestId: "some.uuid",
+    requestId: 'some.uuid',
     inputs: [
       {
-        intent: "action.devices.EXECUTE",
+        intent: 'action.devices.EXECUTE',
         payload: {
           commands: [
             {
               devices: [
                 {
-                  id: "some.id",
+                  id: 'some.id',
                 },
               ],
               execution: [
                 {
-                  command: "action.devices.commands.OnOff",
+                  command: 'action.devices.commands.OnOff',
                   params: {
                     on: true,
                   },
@@ -38,24 +38,24 @@ describe("EXECUTE intent", () => {
   };
 
   const setModesRequest = {
-    requestId: "some.uuid",
+    requestId: 'some.uuid',
     inputs: [
       {
-        intent: "action.devices.EXECUTE",
+        intent: 'action.devices.EXECUTE',
         payload: {
           commands: [
             {
               devices: [
                 {
-                  id: "some.id",
+                  id: 'some.id',
                 },
               ],
               execution: [
                 {
-                  command: "action.devices.commands.SetModes",
+                  command: 'action.devices.commands.SetModes',
                   params: {
                     updateModeSettings: {
-                      program: "some.program",
+                      program: 'some.program',
                     },
                   },
                 },
@@ -68,21 +68,21 @@ describe("EXECUTE intent", () => {
   };
 
   const setTogglesRequest = {
-    requestId: "some.uuid",
+    requestId: 'some.uuid',
     inputs: [
       {
-        intent: "action.devices.EXECUTE",
+        intent: 'action.devices.EXECUTE',
         payload: {
           commands: [
             {
               devices: [
                 {
-                  id: "some.id",
+                  id: 'some.id',
                 },
               ],
               execution: [
                 {
-                  command: "action.devices.commands.SetToggles",
+                  command: 'action.devices.commands.SetToggles',
                   params: {
                     updateToggleSettings: {
                       Light: true,
@@ -98,12 +98,12 @@ describe("EXECUTE intent", () => {
   };
 
   const executeReply = {
-    requestId: "some.uuid",
+    requestId: 'some.uuid',
     payload: {
       commands: [
         {
-          ids: ["123"],
-          status: "SUCCESS",
+          ids: ['123'],
+          status: 'SUCCESS',
           states: {
             on: true,
             online: true,
@@ -114,144 +114,148 @@ describe("EXECUTE intent", () => {
   };
 
   const errorReply = {
-    message: "some.error",
+    message: 'some.error',
   };
-  const testHost = "http://some.google-action.com";
+  const testHost = 'http://some.google-action.com';
 
-  test("Sends a OnOff command to the specified host", async () => {
+  test('Sends a OnOff command to the specified host', async () => {
     const mock = nock(testHost, {
-      reqheaders: { Authorization: "Bearer some.token" },
+      reqheaders: { Authorization: 'Bearer some.token' },
     })
-      .post("/", onOffRequest)
+      .post('/', onOffRequest)
       .reply(200, executeReply);
 
     stdout.start();
     await Execute.run([
-      "-t",
-      "some.token",
-      "-u",
+      '-t',
+      'some.token',
+      '-u',
       testHost,
-      "-i",
-      "some.id",
-      "-c",
-      "OnOff",
-      "on",
-      "true",
+      '-i',
+      'some.id',
+      '-c',
+      'OnOff',
+      'on',
+      'true',
     ]);
     stdout.stop();
 
     expect(mock.isDone()).toBeTruthy();
-    expect(stdout.output).toEqual(JSON.stringify(executeReply, null, 2) + "\n");
+    expect(stdout.output).toEqual(`${JSON.stringify(executeReply, null, 2)}\n`);
   });
 
-  test("Sends SetModes command to the specified host", async () => {
+  test('Sends SetModes command to the specified host', async () => {
     const mock = nock(testHost, {
-      reqheaders: { Authorization: "Bearer some.token" },
+      reqheaders: { Authorization: 'Bearer some.token' },
     })
-      .post("/", setModesRequest)
+      .post('/', setModesRequest)
       .reply(200, executeReply);
 
     stdout.start();
     await Execute.run([
-      "-t",
-      "some.token",
-      "-u",
+      '-t',
+      'some.token',
+      '-u',
       testHost,
-      "-i",
-      "some.id",
-      "-c",
-      "SetModes",
-      "program",
-      "some.program",
+      '-i',
+      'some.id',
+      '-c',
+      'SetModes',
+      'program',
+      'some.program',
     ]);
     stdout.stop();
 
     expect(mock.isDone()).toBeTruthy();
-    expect(stdout.output).toEqual(JSON.stringify(executeReply, null, 2) + "\n");
+    expect(stdout.output).toEqual(`${JSON.stringify(executeReply, null, 2)}\n`);
   });
 
-  test("Sends SetToggles command to the specified host", async () => {
+  test('Sends SetToggles command to the specified host', async () => {
     const mock = nock(testHost, {
-      reqheaders: { Authorization: "Bearer some.token" },
+      reqheaders: { Authorization: 'Bearer some.token' },
     })
-      .post("/", setTogglesRequest)
+      .post('/', setTogglesRequest)
       .reply(200, executeReply);
 
     stdout.start();
     await Execute.run([
-      "-t",
-      "some.token",
-      "-u",
+      '-t',
+      'some.token',
+      '-u',
       testHost,
-      "-i",
-      "some.id",
-      "-c",
-      "SetToggles",
-      "Light",
-      "true",
+      '-i',
+      'some.id',
+      '-c',
+      'SetToggles',
+      'Light',
+      'true',
     ]);
     stdout.stop();
 
     expect(mock.isDone()).toBeTruthy();
-    expect(stdout.output).toEqual(JSON.stringify(executeReply, null, 2) + "\n");
+    expect(stdout.output).toEqual(`${JSON.stringify(executeReply, null, 2)}\n`);
   });
 
-  test("Error response is logged", async () => {
+  test('Error response is logged', async () => {
     const mock = nock(testHost, {
-      reqheaders: { Authorization: "Bearer some.token" },
+      reqheaders: { Authorization: 'Bearer some.token' },
     })
-      .post("/", onOffRequest)
+      .post('/', onOffRequest)
       .reply(409, errorReply);
 
     stdout.start();
     await Execute.run([
-      "-t",
-      "some.token",
-      "-u",
+      '-t',
+      'some.token',
+      '-u',
       testHost,
-      "-i",
-      "some.id",
-      "-c",
-      "OnOff",
-      "on",
-      "true",
+      '-i',
+      'some.id',
+      '-c',
+      'OnOff',
+      'on',
+      'true',
     ]);
     stdout.stop();
 
     expect(mock.isDone()).toBeTruthy();
     expect(stdout.output).toEqual(
-      `Request some.uuid failed with:\n${JSON.stringify(errorReply, null, 2)}\n`
+      `Request some.uuid failed with:\n${JSON.stringify(
+        errorReply,
+        null,
+        2,
+      )}\n`,
     );
   });
 
-  test("Prompts work", async () => {
+  test('Prompts work', async () => {
     const mock = nock(testHost, {
-      reqheaders: { Authorization: "Bearer some.token" },
+      reqheaders: { Authorization: 'Bearer some.token' },
     })
-      .post("/", onOffRequest)
+      .post('/', onOffRequest)
       .reply(200, executeReply);
 
     jest
-      .spyOn(inquirer, "prompt")
-      .mockResolvedValueOnce({ id: "some.id" })
-      .mockResolvedValueOnce({ command: "OnOff" })
-      .mockResolvedValueOnce({ param: "on" })
-      .mockResolvedValueOnce({ value: "true" });
+      .spyOn(inquirer, 'prompt')
+      .mockResolvedValueOnce({ id: 'some.id' })
+      .mockResolvedValueOnce({ command: 'OnOff' })
+      .mockResolvedValueOnce({ param: 'on' })
+      .mockResolvedValueOnce({ value: 'true' });
 
     stdout.start();
-    await Execute.run(["-t", "some.token", "-u", testHost]);
+    await Execute.run(['-t', 'some.token', '-u', testHost]);
     stdout.stop();
 
     expect(mock.isDone()).toBeTruthy();
-    expect(stdout.output).toEqual(JSON.stringify(executeReply, null, 2) + "\n");
+    expect(stdout.output).toEqual(`${JSON.stringify(executeReply, null, 2)}\n`);
   });
 
-  test("Config error is caught", async () => {
+  test('Config error is caught', async () => {
     configStub.mockRejectedValueOnce(new Error());
 
     await expect(
-      Execute.run(["-t", "some.token", "-u", testHost])
-    ).rejects.toThrowError("Please run sync first or provide arguments.");
+      Execute.run(['-t', 'some.token', '-u', testHost]),
+    ).rejects.toThrowError('Please run sync first or provide arguments.');
     stdout.stop();
   });
 });

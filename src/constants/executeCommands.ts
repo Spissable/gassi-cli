@@ -2,9 +2,9 @@ export const executeCommands: {
   [command: string]: { [param: string]: string[] };
 } = {
   StartStop: {
-    start: ["true", "false"],
+    start: ['true', 'false'],
   },
   OnOff: {
-    on: ["true", "false"],
+    on: ['true', 'false'],
   },
 };

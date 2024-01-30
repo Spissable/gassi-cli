@@ -1,7 +1,7 @@
 export interface ExecuteRequest {
   requestId: string;
   inputs: {
-    intent: "action.devices.EXECUTE";
+    intent: 'action.devices.EXECUTE';
     payload: {
       commands: {
         devices: { id: string }[];

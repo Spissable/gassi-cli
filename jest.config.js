@@ -6,12 +6,6 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: ["src/**/*.ts"],
   coveragePathIgnorePatterns: ["index.ts"],
-  globals: {
-    "ts-jest": {
-      tsConfig: "tsconfig.json",
-      diagnostics: true
-    }
-  },
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest"
   },

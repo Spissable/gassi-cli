@@ -1,28 +1,28 @@
-import { Command, flags } from "@oclif/command";
-import axios, { AxiosResponse } from "axios";
-import { v4 as uuid } from "uuid";
-import { SyncRequest } from "../entities/SyncRequest";
-import { SyncResponse } from "../entities/SyncResponse";
-import { Config } from "../entities/Config";
-import { writeConfig } from "../util/configUtil";
+import { Command, flags } from '@oclif/command';
+import axios, { AxiosResponse } from 'axios';
+import { v4 as uuid } from 'uuid';
+import { Config } from '../entities/Config';
+import { SyncRequest } from '../entities/SyncRequest';
+import { SyncResponse } from '../entities/SyncResponse';
+import { writeConfig } from '../util/configUtil';
 
 export default class Sync extends Command {
-  static description = "Sends a SYNC request intent";
+  static description = 'Sends a SYNC request intent';
 
   static flags = {
     token: flags.string({
-      char: "t",
-      description: "oauth access token",
-      env: "token",
+      char: 't',
+      description: 'oauth access token',
+      env: 'token',
       required: true,
     }),
     uri: flags.string({
-      char: "u",
-      description: "uri of the service",
-      env: "uri",
+      char: 'u',
+      description: 'uri of the service',
+      env: 'uri',
       required: true,
     }),
-    help: flags.help({ char: "h" }),
+    help: flags.help({ char: 'h' }),
   };
 
   async run() {
@@ -34,7 +34,7 @@ export default class Sync extends Command {
       requestId,
       inputs: [
         {
-          intent: "action.devices.SYNC",
+          intent: 'action.devices.SYNC',
         },
       ],
     };
@@ -42,10 +42,10 @@ export default class Sync extends Command {
     await axios
       .post(uri, syncBody, {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        responseType: "json",
+        responseType: 'json',
       })
       .then(
         (response: AxiosResponse<SyncResponse>) => {
@@ -59,7 +59,7 @@ export default class Sync extends Command {
         (error) => {
           this.log(`Request ${requestId} failed with:`);
           this.log(JSON.stringify(error.response.data, null, 2));
-        }
+        },
       );
   }
 }
